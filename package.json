@@ -2,7 +2,7 @@
   "name": "goit-node-rest-api",
   "type": "module",
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node ./server.js",
     "dev": "nodemon ./app.js"
   },
   "dependencies": {
@@ -12,8 +12,7 @@
     "joi": "^17.11.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.2",
-    "morgan": "^1.10.0",
-    "nanoid": "^5.0.6"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

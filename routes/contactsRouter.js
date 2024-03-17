@@ -5,11 +5,13 @@ import {
   deleteContact,
   createContact,
   updateContact,
+  updateStatusContact,
 } from "../controllers/contactsControllers.js";
 import {
   createContactSchema,
   updateContactSchema,
-} from "../schemas/contactsSchemas.js";
+  updateStatusSchema,
+} from "../services/schemas/contactsSchemas.js";
 import validateBody from "../helpers/validateBody.js";
 import { ctrlWrapper } from "../helpers/ctrlWrapper.js";
 
@@ -31,6 +33,12 @@ contactsRouter.put(
   "/:id",
   validateBody(updateContactSchema),
   ctrlWrapper(updateContact)
+);
+
+contactsRouter.patch(
+  "/:id/favorite",
+  validateBody(updateStatusSchema),
+  ctrlWrapper(updateStatusContact)
 );
 
 export default contactsRouter;

@@ -5,14 +5,15 @@ import cors from "cors";
 import "dotenv/config";
 
 import contactsRouter from "./routes/contactsRouter.js";
-import e from "express";
 
 const PORT = process.env.PORT || 3000;
 const connectionString = process.env.connectionString;
 
 mongoose.Promise = global.Promise;
 
-const connection = mongoose.connect(connectionString);
+const connection = mongoose.connect(connectionString, {
+  dbName: "db-contacts",
+});
 
 const app = express();
 
@@ -33,10 +34,12 @@ app.use((err, req, res, next) => {
 
 connection
   .then(() => {
+    console.log("Database connection successful");
     app.listen(PORT, () => {
       console.log("Server is running. Use our API on port: 3000");
     });
   })
   .catch((e) => {
     console.log(`Server not running. Error message: ${e.message}`);
+    process.exit(1);
   });
