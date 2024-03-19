@@ -1,10 +1,12 @@
+import mongoose from "mongoose";
 import HttpError from "./HttpError.js";
 
-export const validateId = (id) => {
-  if (id.length !== 24) {
-    throw HttpError(
-      400,
-      "ID must be a 24 character hex string, 12 byte Uint8Array, or an integer"
-    );
+const { isValid } = mongoose.Types.ObjectId;
+
+export const validateId = (req, res, next) => {
+  const { id } = req.params;
+  if (!isValid(id)) {
+    next(HttpError(400, `ID ${id} is not valid`));
   }
+  next();
 };
