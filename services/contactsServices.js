@@ -1,8 +1,4 @@
-import path from "path";
 import { Contact } from "./schemas/contactsSchemas.js";
-
-const filePath = "./db/contacts.json";
-const contactsPath = path.resolve(filePath);
 
 async function listContacts() {
   return Contact.find({});

@@ -8,6 +8,7 @@ import {
 } from "../services/contactsServices.js";
 
 import HttpError from "../helpers/HttpError.js";
+import { validateId } from "../helpers/validateID.js";
 
 export const getAllContacts = async (req, res) => {
   const response = await listContacts();
@@ -16,6 +17,7 @@ export const getAllContacts = async (req, res) => {
 
 export const getOneContact = async (req, res) => {
   const { id } = req.params;
+  validateId(id);
   const response = await getContactById(id);
   if (!response) {
     throw HttpError(404, "Not found");
@@ -25,6 +27,7 @@ export const getOneContact = async (req, res) => {
 
 export const deleteContact = async (req, res) => {
   const { id } = req.params;
+  validateId(id);
   const response = await removeContact(id);
   if (!response) {
     throw HttpError(404, "Not found");
@@ -39,6 +42,7 @@ export const createContact = async (req, res) => {
 
 export const updateContact = async (req, res) => {
   const { id } = req.params;
+  validateId(id);
   const response = await updateContactById(id, req.body);
   if (!response) {
     throw HttpError(404, "Not found");
@@ -48,6 +52,7 @@ export const updateContact = async (req, res) => {
 
 export const updateStatusContact = async (req, res) => {
   const { id } = req.params;
+  validateId(id);
   const status = req.body.favorite;
   const response = await updateFavoriteById(id, status);
   if (!response) {
