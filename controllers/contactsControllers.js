@@ -1,11 +1,57 @@
-import contactsService from "../services/contactsServices.js";
+import {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+  updateContactById,
+  updateFavoriteById,
+} from "../services/contactsServices.js";
 
-export const getAllContacts = (req, res) => {};
+import HttpError from "../helpers/HttpError.js";
 
-export const getOneContact = (req, res) => {};
+export const getAllContacts = async (req, res) => {
+  const response = await listContacts();
+  res.json(response);
+};
 
-export const deleteContact = (req, res) => {};
+export const getOneContact = async (req, res) => {
+  const { id } = req.params;
+  const response = await getContactById(id);
+  if (!response) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(response);
+};
 
-export const createContact = (req, res) => {};
+export const deleteContact = async (req, res) => {
+  const { id } = req.params;
+  const response = await removeContact(id);
+  if (!response) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(response);
+};
 
-export const updateContact = (req, res) => {};
+export const createContact = async (req, res) => {
+  const response = await addContact(req.body);
+  res.status(201).json(response);
+};
+
+export const updateContact = async (req, res) => {
+  const { id } = req.params;
+  const response = await updateContactById(id, req.body);
+  if (!response) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json(response);
+};
+
+export const updateStatusContact = async (req, res) => {
+  const { id } = req.params;
+  const status = req.body.favorite;
+  const response = await updateFavoriteById(id, status);
+  if (!response) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json(response);
+};
